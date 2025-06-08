@@ -169,9 +169,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 👨‍💻 Autor
 
 **Seu Nome**
-- GitHub: [@seuusuario](https://github.com/seuusuario)
-- LinkedIn: [Seu Perfil](https://linkedin.com/in/seuperfil)
-- Email: seu.email@exemplo.com
+- GitHub: (https://github.com/maurizioprizzi)
+- LinkedIn: (https://www.linkedin.com/in/maurizioprizzi/)
+- Email: maurizioprizzi@gmail.com
 
 ## 🎯 Próximas Funcionalidades
 
