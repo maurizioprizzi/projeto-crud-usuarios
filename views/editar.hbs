@@ -1,0 +1,155 @@
+<!-- =============================================================================
+VIEWS/EDITAR.HBS - Formulário de edição com Bootstrap
+============================================================================= -->
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        {{#if success}}
+            <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>{{success}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {{/if}}
+
+        {{#if error}}
+            <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>{{error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {{/if}}
+
+        {{#if usuario}}
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h2 class="card-title mb-0">
+                        <i class="bi bi-pencil-square me-2"></i>Editar Usuário
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/usuarios/{{usuario.cpf}}?_method=PUT" method="POST" class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="cpf-display" class="form-label">
+                                    <i class="bi bi-card-text me-1"></i>CPF:
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control form-control-lg" 
+                                    id="cpf-display" 
+                                    value="{{formatCpf usuario.cpf}}"
+                                    disabled
+                                    readonly
+                                >
+                                <div class="form-text text-muted">
+                                    <i class="bi bi-lock me-1"></i>O CPF não pode ser alterado (chave primária)
+                                </div>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <label for="nome" class="form-label">
+                                    <i class="bi bi-person me-1"></i>Nome Completo:
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control form-control-lg" 
+                                    id="nome" 
+                                    name="nome" 
+                                    value="{{usuario.nome}}"
+                                    required 
+                                    placeholder="Digite o nome completo"
+                                    minlength="2"
+                                    maxlength="100"
+                                >
+                                <div class="invalid-feedback">
+                                    Por favor, informe um nome válido (2-100 caracteres).
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button type="submit" class="btn btn-warning btn-lg btn-custom">
+                                <i class="bi bi-save me-2"></i>Salvar Alterações
+                            </button>
+                            <a href="/usuarios" class="btn btn-outline-secondary btn-lg btn-custom">
+                                <i class="bi bi-arrow-left me-2"></i>Voltar à Lista
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Informações do Registro -->
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Informações do Registro
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar-plus text-success me-2"></i>
+                                <strong>Cadastrado em:</strong>
+                            </div>
+                            <p class="text-muted ms-4">{{formatDate usuario.createdAt}}</p>
+                        </div>
+                        {{#if usuario.updatedAt}}
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar-check text-warning me-2"></i>
+                                <strong>Última atualização:</strong>
+                            </div>
+                            <p class="text-muted ms-4">{{formatDate usuario.updatedAt}}</p>
+                        </div>
+                        {{/if}}
+                    </div>
+                    
+                    <div class="alert alert-light border" role="alert">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-lightbulb text-warning me-2"></i>
+                            <div>
+                                <strong>Dica:</strong> O CPF funciona como identificador único no sistema e não pode ser modificado. 
+                                Para alterar o CPF, será necessário criar um novo usuário.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {{else}}
+            <div class="card shadow">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="bi bi-exclamation-triangle text-warning" style="font-size: 4rem;"></i>
+                    </div>
+                    <h3 class="text-muted mb-3">Usuário não encontrado</h3>
+                    <p class="text-muted mb-4">O usuário que você está tentando editar não foi encontrado no sistema.</p>
+                    <a href="/usuarios" class="btn btn-primary btn-lg">
+                        <i class="bi bi-list-ul me-2"></i>Voltar à Lista
+                    </a>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</div>
+
+<script>
+// Validação do Bootstrap
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>

@@ -1,0 +1,45 @@
+# ===== NODE.JS =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== DEPENDÊNCIAS =====
+package-lock.json
+yarn.lock
+
+# ===== AMBIENTE =====
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# ===== LOGS =====
+logs/
+*.log
+
+# ===== SISTEMA OPERACIONAL =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== EDITORES =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== TEMPORÁRIOS =====
+tmp/
+temp/
+.cache/
+
+# ===== MONGODB =====
+data/
+dump/
+
+# ===== OUTROS =====
+coverage/
+.nyc_output/

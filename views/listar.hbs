@@ -1,0 +1,145 @@
+<!-- =============================================================================
+VIEWS/LISTAR.HBS - Lista de usuários com Bootstrap
+============================================================================= -->
+<div class="row">
+    <div class="col-12">
+        {{#if error}}
+            <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>{{error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {{/if}}
+
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h2 class="card-title mb-0">
+                    <i class="bi bi-list-ul me-2"></i>Lista de Usuários Cadastrados
+                </h2>
+                {{#if usuarios}}
+                    <span class="badge bg-light text-dark fs-6">
+                        <i class="bi bi-people-fill me-1"></i>Total: {{total}}
+                    </span>
+                {{/if}}
+            </div>
+
+            {{#if usuarios}}
+                <div class="card-body p-0">
+                    <div class="d-flex justify-content-between align-items-center p-3 bg-light">
+                        <div>
+                            <span class="fw-bold text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                {{total}} usuário(s) encontrado(s)
+                            </span>
+                        </div>
+                        <a href="/cadastro" class="btn btn-success">
+                            <i class="bi bi-plus-circle me-2"></i>Novo Usuário
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">
+                                        <i class="bi bi-person me-1"></i>Nome
+                                    </th>
+                                    <th scope="col">
+                                        <i class="bi bi-card-text me-1"></i>CPF
+                                    </th>
+                                    <th scope="col">
+                                        <i class="bi bi-calendar me-1"></i>Data de Cadastro
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        <i class="bi bi-gear me-1"></i>Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each usuarios}}
+                                <tr>
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar me-2">
+                                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                                     style="width: 40px; height: 40px; font-weight: bold;">
+                                                    {{substring this.nome 0 1}}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold">{{this.nome}}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <code class="bg-light p-1 rounded">{{formatCpf this.cpf}}</code>
+                                    </td>
+                                    <td class="align-middle">
+                                        <small class="text-muted">
+                                            <i class="bi bi-clock me-1"></i>
+                                            {{formatDate this.createdAt}}
+                                        </small>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group" role="group">
+                                            <a href="/usuarios/{{this.cpf}}/editar" 
+                                               class="btn btn-outline-primary btn-sm" 
+                                               data-bs-toggle="tooltip" 
+                                               data-bs-placement="top" 
+                                               title="Editar usuário">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form action="/usuarios/{{this.cpf}}?_method=DELETE" method="POST" 
+                                                  style="display: inline;" 
+                                                  onsubmit="return confirmarExclusao('{{formatCpf this.cpf}}', '{{this.nome}}')">
+                                                <button type="submit" 
+                                                        class="btn btn-outline-danger btn-sm"
+                                                        data-bs-toggle="tooltip" 
+                                                        data-bs-placement="top" 
+                                                        title="Excluir usuário">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {{else}}
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
+                    </div>
+                    <h3 class="text-muted mb-3">Nenhum usuário encontrado</h3>
+                    <p class="text-muted mb-4">Não há usuários cadastrados no sistema ainda.</p>
+                    <a href="/cadastro" class="btn btn-success btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Cadastrar Primeiro Usuário
+                    </a>
+                </div>
+            {{/if}}
+
+            <div class="card-footer bg-light text-center">
+                <a href="/" class="btn btn-outline-secondary">
+                    <i class="bi bi-house me-2"></i>Voltar ao Início
+                </a>
+                {{#if usuarios}}
+                    <a href="/cadastro" class="btn btn-success ms-2">
+                        <i class="bi bi-plus-circle me-2"></i>Adicionar Outro
+                    </a>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Inicializar tooltips do Bootstrap
+document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>

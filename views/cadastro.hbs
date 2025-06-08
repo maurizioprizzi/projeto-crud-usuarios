@@ -1,0 +1,145 @@
+<!-- =============================================================================
+VIEWS/CADASTRO.HBS - Formulário de cadastro com Bootstrap
+============================================================================= -->
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        {{#if success}}
+            <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>{{success}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {{/if}}
+
+        {{#if error}}
+            <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>{{error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {{/if}}
+
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h2 class="card-title mb-0">
+                    <i class="bi bi-person-plus-fill me-2"></i>Cadastrar Novo Usuário
+                </h2>
+            </div>
+            <div class="card-body p-4">
+                <form action="/usuarios" method="POST" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="nome" class="form-label">
+                                <i class="bi bi-person me-1"></i>Nome Completo:
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg" 
+                                id="nome" 
+                                name="nome" 
+                                value="{{nome}}"
+                                required 
+                                placeholder="Digite o nome completo"
+                                minlength="2"
+                                maxlength="100"
+                            >
+                            <div class="invalid-feedback">
+                                Por favor, informe um nome válido (2-100 caracteres).
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="cpf" class="form-label">
+                                <i class="bi bi-card-text me-1"></i>CPF:
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg" 
+                                id="cpf" 
+                                name="cpf" 
+                                value="{{cpf}}"
+                                required 
+                                placeholder="000.000.000-00"
+                                maxlength="14"
+                            >
+                            <div class="form-text">
+                                <i class="bi bi-info-circle me-1"></i>Digite apenas os números ou use a formatação
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe um CPF válido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="submit" class="btn btn-success btn-lg btn-custom">
+                            <i class="bi bi-save me-2"></i>Cadastrar Usuário
+                        </button>
+                        <a href="/" class="btn btn-outline-secondary btn-lg btn-custom">
+                            <i class="bi bi-arrow-left me-2"></i>Voltar ao Início
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-8">
+        <div class="card bg-light">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-info-circle text-info me-2"></i>Informações Importantes:
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                O CPF será usado como identificador único
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                O nome deve ter entre 2 e 100 caracteres
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="bi bi-x-circle text-danger me-2"></i>
+                                Não é possível cadastrar CPFs duplicados
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+                                Todos os campos são obrigatórios
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Validação do Bootstrap
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
